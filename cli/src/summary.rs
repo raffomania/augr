@@ -1,6 +1,6 @@
 use crate::{format_duration, time_input::parse_default_local};
 use augr_core::{Tag, Timesheet};
-use chrono::{DateTime, Local};
+use chrono::{DateTime, Duration, Local};
 use std::collections::BTreeSet;
 use structopt::StructOpt;
 
@@ -102,7 +102,7 @@ impl SummaryCmd {
 }
 
 fn default_start() -> DateTime<Local> {
-    Local::today().and_hms(0, 0, 0)
+    Local::today().and_hms(0, 0, 0) - Duration::weeks(4)
 }
 
 fn default_end() -> DateTime<Local> {
