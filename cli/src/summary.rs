@@ -38,6 +38,7 @@ impl SummaryCmd {
             .into_iter()
             .filter(|s| s.start_time.with_timezone(&Local) >= start)
             .filter(|s| s.start_time.with_timezone(&Local) <= end)
+            .filter(|s| !s.tags.is_empty())
             .filter(|s| s.tags.is_superset(&tags));
 
         let mut total_duration = chrono::Duration::seconds(0);
@@ -45,14 +46,10 @@ impl SummaryCmd {
 
         if !self.show_ends {
             println!("Date  Start Duration Total     Tags");
-            println!(
-                "――――― ――――― ―――――――― ――――――――  ――――――――"
-            );
+            println!("――――― ――――― ―――――――― ――――――――  ――――――――");
         } else {
             println!("Date  Start End   Duration Total     Tags");
-            println!(
-                "――――― ――――― ――――― ―――――――― ――――――――  ――――――――"
-            );
+            println!("――――― ――――― ――――― ―――――――― ――――――――  ――――――――");
         }
         for segment in segments {
             let seg_datetime = segment.start_time.with_timezone(&chrono::Local);
